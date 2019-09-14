@@ -3,6 +3,7 @@
     <div class="jumbotron">
       <h2 class="display-4">Izbornik</h2>
       <p class="lead">Specijalizacija po kategorijama</p>
+      {{korisnik}}
     </div>
     <div class="container">
       <div class="row">
@@ -10,6 +11,7 @@
           <div class="card-body">
             <img src="../static/img/medicalfolder.svg" />
           </div>
+
           <button
             @click="$router.push({name: 'category', params: {id: kategorija.id, category: kategorija.naziv}})"
             type="button"
@@ -25,16 +27,12 @@
 import axios from "axios";
 export default {
   name: "Home",
-  props: {
-    categories: {
-      type: Object,
-      required: true
-    }
-  },
+  props: ["naziv"],
   data() {
     return {
       show: true,
       kategorije: {},
+
       data: {
         id: "",
         naziv: ""
@@ -57,7 +55,8 @@ export default {
   },
   created() {
     this.dohvatiKategorije();
-  }
+  },
+  mounted: {}
 };
 </script>
 

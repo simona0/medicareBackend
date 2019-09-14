@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
 import TheHeader from "./components/TheHeader.vue";
 import TheFooter from "./components/TheFooter.vue";
 
@@ -18,7 +17,6 @@ import "bootstrap/dist/js/bootstrap.min.js";
 export default {
   name: "app",
   components: {
-    HelloWorld,
     TheHeader,
     TheFooter
   }

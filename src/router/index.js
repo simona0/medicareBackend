@@ -6,6 +6,10 @@ import about from "@/components/about";
 import TheFooter from "@/components/TheFooter";
 import home from "@/components/home";
 import category from "@/components/category";
+import advices from "@/components/advices";
+import profil from "@/components/profil";
+import contacts from "@/components/contacts";
+import login from "@/components/login";
 
 Vue.use(Router);
 
@@ -27,14 +31,29 @@ export default new Router({
       component: about
     },
     {
-      path: "/footer",
-      name: "TheFooteroter",
-      component: TheFooter
+      path: "/advices",
+      name: "advices",
+      component: advices
+    },
+    {
+      path: "/profil",
+      name: "profil",
+      component: profil
+    },
+    {
+      path: "/contacts",
+      name: "contacts",
+      component: contacts
     },
     {
       path: "/category/:id/:category",
       name: "category",
       component: category
+    },
+    {
+      path: "/login/",
+      name: "login",
+      component: login
     }
   ],
   mode: "history"

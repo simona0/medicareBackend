@@ -1,5 +1,5 @@
 <template>
-  <div class="headernav">
+  <div class="header nav">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-info text-uppercase fixed-top" id="mainNav">
       <div class="container">
@@ -24,23 +24,20 @@
             <li class="nav-item mx-0 mx-lg-1">
               <a
                 class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                href="/savjeti"
+                href="/advices"
               >Savjeti</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a
                 class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                href="/mojiPodaci"
+                href="/profil"
               >Moji podaci</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a
                 class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                href="/kontakti"
+                href="/contacts"
               >Kontakti</a>
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/about">O nama</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a
@@ -48,36 +45,52 @@
                 href="/sign-up"
               >Registracija</a>
             </li>
+            <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">Prijava</a>
+            </li>
+            <li class="nav-item dropdown mx-0 mx-lg-1">
+              <a
+                class="nav-link dropdown-toggle py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                href="/profil"
+                data-toggle="dropdown"
+              >Dobrodošao {{korisnik.ime}}</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/">Odjava</a>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
-    <header class="masthead bg-primary text-white text-center">
-      <div class="container d-flex align-items-center flex-column">
-        <!-- Masthead Avatar Image -->
-
-        <!-- Masthead Heading -->
-        <h1 class="masthead-heading text-uppercase mb-0" style="font-size: 120px;">Medi Care</h1>
-        <h3>Your Health Guide</h3>
-        <!-- Icon Divider -->
-        <div class="divider-custom divider-light">
-          <div class="divider-custom-line"></div>
-          <div class="divider-custom-icon">
-            <i class="fas fa-star"></i>
-          </div>
-          <div class="divider-custom-line"></div>
-        </div>
-
-        <!-- Masthead Subheading -->
-
-        <p class="masthead-subheading font-weight-light mb-0">Besplatna aplikacija</p>
-      </div>
-    </header>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "header",
+  data() {
+    return {
+      korisnik: {}
+    };
+  },
+  methods: {
+    trenutniKorisnik() {
+      let korisnik = this.$cookie.get("MedicareLogin");
+      if (korisnik != null) {
+        korisnik = JSON.parse(korisnik);
+        this.korisnik = korisnik;
+      }
+    },
+    logout() {
+      this.$cookie.delete("MedicareLogin");
+      this.$router.push({ name: "Login" });
+      this.trenutniKorisnik();
+    }
+  },
+  beforeMount() {
+    this.trenutniKorisnik();
+  }
+};
 </script>
 
 <style>

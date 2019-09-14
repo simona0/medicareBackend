@@ -9,7 +9,7 @@
       <div class="col-sm-8">
         <alert :message="message" v-if="showMessage"></alert>
         <form
-          @submit="onSubmit"
+          onsubmit="Register()"
           name="sentMessage"
           v-if="show"
           id="contactForm"
@@ -22,6 +22,7 @@
                 class="form-control"
                 id="name"
                 type="text"
+                v-model="form.ime"
                 placeholder="Ime"
                 required="required"
                 data-validation-required-message="Please enter your name."
@@ -35,24 +36,11 @@
               <input
                 class="form-control"
                 id="surname"
+                v-model="form.prezime"
                 type="text"
                 placeholder="Prezime"
                 required="required"
                 data-validation-required-message="Please enter your name."
-              />
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-              <label>Korisničko ime</label>
-              <input
-                class="form-control"
-                id="username"
-                type="text"
-                placeholder="Korisničko ime"
-                required="required"
-                data-validation-required-message="Please enter your username"
               />
               <p class="help-block text-danger"></p>
             </div>
@@ -64,6 +52,7 @@
                 class="form-control"
                 id="email"
                 type="email"
+                v-model="form.email"
                 placeholder="Email Adresa"
                 required="required"
                 data-validation-required-message="Please enter your email address."
@@ -78,6 +67,7 @@
                 class="form-control"
                 id="password"
                 type="password"
+                v-model="form.lozinka"
                 placeholder="Lozinka"
                 required="required"
                 data-validation-required-message="Please enter your phone number."
@@ -85,37 +75,18 @@
               <p class="help-block text-danger"></p>
             </div>
           </div>
-          <div class="custom-control custom-radio">
-            <input
-              type="radio"
-              id="korisnik"
-              name="customRadio"
-              class="custom-control-input"
-              value="Korisnik"
-              v-model="form.tipKorisnika"
-            />
-            <label class="custom-control-label" for="korisnik">Registracija kao korisnik</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input
-              type="radio"
-              id="doktor"
-              name="customRadio"
-              class="custom-control-input"
-              value="Doktor"
-              v-model="form.tipKorisnika"
-            />
-            <label class="custom-control-label" for="doktor">Registracija kao doktor</label>
-          </div>
 
-          <div class="form-group" v-if="form.tipKorisnika === 'Doktor'">
+          <div class="form-group">
             <label for="exampleFormControlSelect1">Odaberite Vašu specijalizaciju</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <select class="form-control" id="exampleFormControlSelect1" v-model="form.specijalnost">
+              <option>Uho,grlo,nos</option>
+              <option>Mozak i živćani sustav</option>
+              <option>Kosti i mišićni sustav</option>
+              <option>Probavni sustav</option>
+              <option>Pluća i dišni sustav</option>
+              <option>Mokraćni i spolni organi</option>
+              <option>Srce i krvožilni sustav</option>
+              <option>Alergije</option>
             </select>
           </div>
           <br />
@@ -124,7 +95,7 @@
             <button
               type="submit"
               class="btn btn-info btn-xl"
-              v-on:click.stop.prevent="onSubmit"
+              v-on:click.stop.prevent="Register"
             >Registracija</button>
           </div>
         </form>
@@ -141,8 +112,12 @@
 <script>
 import axios from "axios";
 import Alert from "./Alert.vue";
+
 export default {
   name: "SignUp",
+  components: {
+    alert: Alert
+  },
   data() {
     return {
       users: {},
@@ -151,15 +126,11 @@ export default {
         prezime: "",
         lozinka: "",
         email: "",
-        korisnickoIme: "",
-        tipKorisnika: ""
+        specijalnost: ""
       },
       showMessage: false,
       show: true
     };
-  },
-  components: {
-    alert: Alert
   },
   methods: {
     getUsers() {
@@ -196,18 +167,18 @@ export default {
       this.form.prezime = "";
       this.form.email = "";
       this.form.lozinka = "";
-      this.form.korisnickoIme = "";
       this.form.tipKorisnika = "";
+      this.form.specijalnost = "";
     },
-    onSubmit(evt) {
+    Register(evt) {
       evt.preventDefault();
       const payload = {
         ime: this.form.ime,
         prezime: this.form.prezime,
         email: this.form.email,
         lozinka: this.form.lozinka,
-        korisnickoIme: this.form.korisnickoIme,
-        tipKorisnika: this.form.tipKorisnika
+        tipKorisnika: this.form.tipKorisnika,
+        specijalnost: this.form.specijalnost
       };
       this.addUser(payload);
       this.initForm();
