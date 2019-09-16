@@ -2,7 +2,6 @@ import Vue from "vue";
 import Router from "vue-router";
 import TheHeader from "@/components/TheHeader";
 import SignUp from "@/components/SignUp";
-import about from "@/components/about";
 import TheFooter from "@/components/TheFooter";
 import home from "@/components/home";
 import category from "@/components/category";
@@ -24,11 +23,6 @@ export default new Router({
       path: "/sign-up",
       name: "SignUp",
       component: SignUp
-    },
-    {
-      path: "/about",
-      name: "About",
-      component: about
     },
     {
       path: "/advices",
